@@ -1,7 +1,7 @@
 export default function TodoMenagement() {
   return (
     <div className="todo-container">
-      <button className="buttons">Delete all</button>
+      <button className="buttons red">Delete all</button>
       <select className="buttons">
         <option>By Name</option>
         <option>By Date</option>
