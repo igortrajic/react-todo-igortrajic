@@ -3,8 +3,8 @@ export default function TodoCreationForm() {
     <form className="todo-container">
       <input type="text" className="user-input" />
       <input type="date"></input>
-      <button className="buttons">description</button>
-      <button className="buttons">Add</button>
+      <button className="buttons blue">description</button>
+      <button className="buttons green">Add</button>
     </form>
   );
 }

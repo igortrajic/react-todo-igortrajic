@@ -2,7 +2,7 @@ import TodoItem from '../components/TodoItem';
 
 export default function TodoList() {
   return (
-    <ul>
+    <ul className="ListOfTodos">
       <TodoItem></TodoItem>
       <TodoItem></TodoItem>
     </ul>

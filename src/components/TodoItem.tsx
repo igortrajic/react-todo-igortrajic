@@ -1,7 +1,7 @@
 export default function TodoItem() {
   return (
-    <li className="todo-list">
-      <input type="checkbox" />
+    <li className="todo-item">
+      <input type="checkbox" className="checkbox" />
       <h3 className="todo-title">dada</h3>
       <p className="todo-description">dadad</p>
       <p>
@@ -9,7 +9,7 @@ export default function TodoItem() {
           December 1
         </time>
       </p>
-      <button className="buttons">Delete</button>
+      <button className="buttons red">Delete</button>
     </li>
   );
 }
