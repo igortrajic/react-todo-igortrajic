@@ -1,13 +1,15 @@
 export default function TodoItem() {
   return (
     <li className="todo-list">
-      <div className="todo-item">
-        <input type="checkbox" />
-        <div className="todo-title">dada</div>
-        <div className="todo-description">dadad</div>
-        <div className="todo-date">dadad</div>
-        <button className="buttons">Delete</button>
-      </div>
+      <input type="checkbox" />
+      <h3 className="todo-title">dada</h3>
+      <p className="todo-description">dadad</p>
+      <p>
+        <time dateTime="2025-12-01" className="todo-date">
+          December 1
+        </time>
+      </p>
+      <button className="buttons">Delete</button>
     </li>
   );
 }
