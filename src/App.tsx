@@ -6,6 +6,7 @@ import TodoMenagement from './components/TodoMenagement';
 import TodoCreationForm from './components/TodoCreationForm';
 import type { Todo } from './components/todoInterface';
 import { getTodos, createTodo } from './addingTodo';
+import { DeleteTodo } from './deleteTodo';
 
 const todosPromise = getTodos();
 
@@ -13,7 +14,7 @@ export default function App() {
   const initialTodos = use(todosPromise);
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
 
-  async function handleAddTodo(formData: FormData) {
+  async function HandleAddTodo(formData: FormData) {
     try {
       const title = formData.get('title')?.toString() ?? '';
       const due_date = formData.get('due_date')?.toString() ?? '';
@@ -25,14 +26,24 @@ export default function App() {
       console.error('Failed to add todo', error);
     }
   }
+  async function HandleDeleteTodo(formData: FormData) {
+    const id = Number(formData.get('id'));
+    if (!id) return;
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    try {
+      await DeleteTodo(id);
+    } catch (error) {
+      console.error('Failed to delete', error);
+    }
+  }
   return (
     <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
       <Suspense fallback={<div>Loading...</div>}>
         <div className="site-body">
           <h1>Web Todo</h1>
-          <TodoCreationForm action={handleAddTodo} />
+          <TodoCreationForm action={HandleAddTodo} />
           <TodoMenagement />
-          <TodoList todos={todos} />
+          <TodoList todos={todos} deleteAction={HandleDeleteTodo} />
         </div>
       </Suspense>
     </ErrorBoundary>
