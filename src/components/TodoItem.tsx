@@ -1,10 +1,11 @@
-import type { BaseTodo } from './todoInterface';
+import type { Todo } from './todoInterface';
 
 interface TodoItemProps {
-  todo: BaseTodo;
+  todo: Todo;
+  deleteAction: (formData: FormData) => void;
 }
 
-export default function TodoItem({ todo }: TodoItemProps) {
+export default function TodoItem({ todo, deleteAction }: TodoItemProps) {
   return (
     <li className="todo-item">
       <input type="checkbox" className="checkbox"></input>
@@ -15,7 +16,12 @@ export default function TodoItem({ todo }: TodoItemProps) {
           {todo.due_date}
         </time>
       </p>
-      <button className="buttons red">Delete</button>
+      <form action={deleteAction}>
+        <input type="hidden" name="id" value={todo.id} />
+        <button className="buttons red" type="submit">
+          Delete
+        </button>
+      </form>
     </li>
   );
 }
