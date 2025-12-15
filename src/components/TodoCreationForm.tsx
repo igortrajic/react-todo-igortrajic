@@ -1,16 +1,16 @@
 import { useState } from 'react';
 
-interface newTodoData {
+interface NewTodoData {
   title: string;
   due_date: string;
   content: string;
 }
 
-interface todoCreationFormProps {
-  onAdd: (newTodo: newTodoData) => void;
+interface TodoCreationFormProps {
+  onAdd: (newTodo: NewTodoData) => void;
 }
 
-export default function TodoCreationForm({ onAdd }: todoCreationFormProps) {
+export default function TodoCreationForm({ onAdd }: TodoCreationFormProps) {
   const [title, setTitle] = useState('');
   const [due_date, setDueDate] = useState('');
   const [content, setContent] = useState('');

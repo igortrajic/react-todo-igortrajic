@@ -23,7 +23,6 @@ export default function App() {
       setTodos((prev) => [...prev, createdTodo]);
     } catch (error) {
       console.error('Failed to add todo', error);
-      alert('Failed to add todo');
     }
   };
   return (

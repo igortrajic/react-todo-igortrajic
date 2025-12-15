@@ -37,5 +37,8 @@ export const createTodo = async (newTodoData: {
   }
 
   const responseData = await response.json();
+  if (!responseData || responseData.length === 0) {
+    throw new Error('API did not return the created todo in the response.');
+  }
   return responseData[0];
 };
