@@ -1,10 +1,12 @@
 import TodoItem from '../components/TodoItem';
+import type { Todo } from './todoInterface';
 
-export default function TodoList() {
+export default function TodoList({ todos }: { todos: Todo[] }) {
   return (
     <ul>
-      <TodoItem></TodoItem>
-      <TodoItem></TodoItem>
+      {todos.map((todo) => (
+        <TodoItem key={todo.id} todo={todo} />
+      ))}
     </ul>
   );
 }
