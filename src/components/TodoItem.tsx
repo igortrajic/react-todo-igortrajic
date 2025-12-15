@@ -2,7 +2,7 @@ import type { Todo } from './todoInterface';
 
 interface TodoItemProps {
   todo: Todo;
-  deleteAction: (FormData: FormData) => void;
+  deleteAction: (formData: FormData) => void;
 }
 
 export default function TodoItem({ todo, deleteAction }: TodoItemProps) {
