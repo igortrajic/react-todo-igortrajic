@@ -4,9 +4,10 @@ import './App.css';
 import TodoList from './components/TodoList';
 import TodoMenagement from './components/TodoMenagement';
 import TodoCreationForm from './components/TodoCreationForm';
-import type { Todo } from './components/todoInterface';
+import type { Todo, BaseTodo } from './components/todoInterface';
 import { getTodos, createTodo } from './addingTodo';
 import { deleteTodo } from './deleteTodo';
+import { updateTodo } from './editingTodo';
 
 const todosPromise = getTodos();
 
@@ -38,6 +39,34 @@ export default function App() {
       setTodos(previousTodos);
     }
   }
+
+  async function handleEditTodo(formData: FormData) {
+    const id = Number(formData.get('id'));
+    if (!id) return;
+
+    const title = formData.get('title')?.toString();
+    const content = formData.get('content')?.toString();
+    const due_date = formData.get('due_date')?.toString();
+    const done = formData.get('done')?.toString();
+
+    const updates: Partial<BaseTodo> = {};
+    if (title !== undefined) updates.title = title;
+    if (content !== undefined) updates.content = content;
+    if (due_date !== undefined) updates.due_date = due_date;
+    if (done !== undefined) {
+      updates.done = done === 'true';
+    }
+
+    setTodos((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, ...updates } : t)),
+    );
+
+    try {
+      await updateTodo(id, updates);
+    } catch (error) {
+      console.error('Failed to update', error);
+    }
+  }
   return (
     <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
       <Suspense fallback={<div>Loading...</div>}>
@@ -45,7 +74,11 @@ export default function App() {
           <h1>Web Todo</h1>
           <TodoCreationForm action={handleAddTodo} />
           <TodoMenagement />
-          <TodoList todos={todos} deleteAction={handleDeleteTodo} />
+          <TodoList
+            todos={todos}
+            deleteAction={handleDeleteTodo}
+            editAction={handleEditTodo}
+          />
         </div>
       </Suspense>
     </ErrorBoundary>
