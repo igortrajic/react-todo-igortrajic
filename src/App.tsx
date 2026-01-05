@@ -14,6 +14,8 @@ const todosPromise = getTodos();
 export default function App() {
   const initialTodos = use(todosPromise);
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
+  const [sortType, setSortType] = useState('name');
+  const [filterType, setFilterType] = useState('all');
 
   async function handleAddTodo(formData: FormData) {
     try {
@@ -69,15 +71,33 @@ export default function App() {
       setTodos(previousTodos);
     }
   }
+
+  const sortedTodos = [...todos].sort((a, b) => {
+    if (sortType === 'date') {
+      if (!a.due_date) return 1;
+      if (!b.due_date) return -1;
+      return a.due_date.localeCompare(b.due_date);
+    }
+    return a.title.localeCompare(b.title);
+  });
+
+  const filteredTodos = sortedTodos.filter((todo) => {
+    if (filterType === 'done') return todo.done === true;
+    if (filterType === 'undone') return todo.done === false;
+    return true;
+  });
   return (
     <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
       <Suspense fallback={<div>Loading...</div>}>
         <div className="site-body">
           <h1>Web Todo</h1>
           <TodoCreationForm action={handleAddTodo} />
-          <TodoMenagement />
+          <TodoMenagement
+            onSortChange={setSortType}
+            onFilterChange={setFilterType}
+          />
           <TodoList
-            todos={todos}
+            todos={filteredTodos}
             deleteAction={handleDeleteTodo}
             editAction={handleEditTodo}
           />
