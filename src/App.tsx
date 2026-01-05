@@ -8,25 +8,9 @@ import type { Todo, BaseTodo } from './components/todoInterface';
 import { getTodos, createTodo } from './addingTodo';
 import { deleteTodo } from './deleteTodo';
 import { updateTodo } from './editingTodo';
+import { ErrorPopUp } from './components/ErrorMessage';
 
 const todosPromise = getTodos();
-
-function ErrorPopUp({
-  message,
-  onClose,
-}: {
-  message: string;
-  onClose: () => void;
-}) {
-  return (
-    <div className="ErrorMessage">
-      <span>{message}</span>
-      <button onClick={onClose} className="errorMessageButton">
-        Close
-      </button>
-    </div>
-  );
-}
 
 export default function App() {
   const initialTodos = use(todosPromise);
