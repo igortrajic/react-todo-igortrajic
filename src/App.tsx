@@ -11,11 +11,17 @@ import { updateTodo } from './editingTodo';
 
 const todosPromise = getTodos();
 
-function ErrorPopUp({ message, onClose }: { message: string; onClose: () => void }) {
+function ErrorPopUp({
+  message,
+  onClose,
+}: {
+  message: string;
+  onClose: () => void;
+}) {
   return (
-    <div className='ErrorMessage'>
+    <div className="ErrorMessage">
       <span>{message}</span>
-      <button onClick={onClose} className='errorMessageButton'>
+      <button onClick={onClose} className="errorMessageButton">
         Close
       </button>
     </div>
@@ -40,7 +46,7 @@ export default function App() {
       setTodos((prev) => [...prev, createdTodo]);
     } catch (error) {
       console.error('Failed to add todo', error);
-      setErrorMessage('Failed to create task. Please try again.')
+      setErrorMessage('Failed to create task. Please try again.');
     }
   }
   async function handleDeleteTodo(formData: FormData) {
@@ -52,7 +58,7 @@ export default function App() {
       await deleteTodo(id);
     } catch (error) {
       console.error('Failed to delete', error);
-      setErrorMessage('Failed to delete task. The server returned an error.')
+      setErrorMessage('Failed to delete task. The server returned an error.');
       setTodos(previousTodos);
     }
   }
@@ -83,7 +89,7 @@ export default function App() {
       await updateTodo(id, updates);
     } catch (error) {
       console.error('Failed to update', error);
-      setErrorMessage('Failed to modify task. Changes were not saved.')
+      setErrorMessage('Failed to modify task. Changes were not saved.');
       setTodos(previousTodos);
     }
   }
@@ -108,7 +114,7 @@ export default function App() {
         <div className="site-body">
           <h1>Web Todo</h1>
           {errorMessage && (
-          <ErrorPopUp message={errorMessage} onClose={clearError} />
+            <ErrorPopUp message={errorMessage} onClose={clearError} />
           )}
           <TodoCreationForm action={handleAddTodo} />
           <TodoMenagement
