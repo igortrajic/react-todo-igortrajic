@@ -1,14 +1,24 @@
-export default function TodoMenagement() {
+interface TodoManagementProps {
+  onSortChange: (sortType: string) => void;
+  onFilterChange: (filterType: string) => void;
+}
+
+export default function TodoMenagement({onSortChange, onFilterChange}: TodoManagementProps) {
   return (
     <div className="todo-container">
       <button className="buttons red">Delete all</button>
-      <select className="buttons">
-        <option>By Name</option>
-        <option>By Date</option>
+      <select className="buttons"
+      onChange={(e) => onSortChange(e.target.value)}
+      >
+        <option value="name">By Name</option>
+        <option value="date">By Date</option>
       </select>
-      <select className="buttons">
-        <option>done</option>
-        <option>not done</option>
+      <select className="buttons"
+      onChange={(e) => onFilterChange(e.target.value)}
+      >
+        <option value="all">All</option>
+        <option value="done">Done</option>
+        <option value="undone">Not Done</option>
       </select>
     </div>
   );
