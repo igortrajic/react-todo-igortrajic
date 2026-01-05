@@ -8,6 +8,7 @@ import type { Todo, BaseTodo } from './components/todoInterface';
 import { getTodos, createTodo } from './addingTodo';
 import { deleteTodo } from './deleteTodo';
 import { updateTodo } from './editingTodo';
+import { ErrorPopUp } from './components/ErrorMessage';
 
 const todosPromise = getTodos();
 
@@ -16,6 +17,8 @@ export default function App() {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
   const [sortType, setSortType] = useState('name');
   const [filterType, setFilterType] = useState('all');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const clearError = () => setErrorMessage(null);
 
   async function handleAddTodo(formData: FormData) {
     try {
@@ -27,6 +30,7 @@ export default function App() {
       setTodos((prev) => [...prev, createdTodo]);
     } catch (error) {
       console.error('Failed to add todo', error);
+      setErrorMessage('Failed to create task. Please try again.');
     }
   }
   async function handleDeleteTodo(formData: FormData) {
@@ -38,6 +42,7 @@ export default function App() {
       await deleteTodo(id);
     } catch (error) {
       console.error('Failed to delete', error);
+      setErrorMessage('Failed to delete task. The server returned an error.');
       setTodos(previousTodos);
     }
   }
@@ -68,6 +73,7 @@ export default function App() {
       await updateTodo(id, updates);
     } catch (error) {
       console.error('Failed to update', error);
+      setErrorMessage('Failed to modify task. Changes were not saved.');
       setTodos(previousTodos);
     }
   }
@@ -91,6 +97,9 @@ export default function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <div className="site-body">
           <h1>Web Todo</h1>
+          {errorMessage && (
+            <ErrorPopUp message={errorMessage} onClose={clearError} />
+          )}
           <TodoCreationForm action={handleAddTodo} />
           <TodoMenagement
             onSortChange={setSortType}
