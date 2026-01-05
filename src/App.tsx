@@ -57,6 +57,7 @@ export default function App() {
       updates.done = done === 'true';
     }
 
+    const previousTodos = todos;
     setTodos((prev) =>
       prev.map((t) => (t.id === id ? { ...t, ...updates } : t)),
     );
@@ -65,6 +66,7 @@ export default function App() {
       await updateTodo(id, updates);
     } catch (error) {
       console.error('Failed to update', error);
+      setTodos(previousTodos);
     }
   }
   return (

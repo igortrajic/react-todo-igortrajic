@@ -30,7 +30,7 @@ export default function TodoItem({
 
       <h3 className="title">
         <EditableField
-          key={todo.title}
+          key={todo.id + '-title'}
           initialValue={todo.title}
           onSave={(val) => handleSave('title', val)}
         />
@@ -38,7 +38,7 @@ export default function TodoItem({
 
       <p className="description">
         <EditableField
-          key={todo.content}
+          key={todo.id + '-content'}
           initialValue={todo.content || ''}
           onSave={(val) => handleSave('content', val)}
           inputType="textarea"
@@ -49,7 +49,7 @@ export default function TodoItem({
       <p>
         <time dateTime={todo.due_date} className="todo-date">
           <EditableField
-            key={todo.due_date}
+            key={todo.id + '-due_date'}
             initialValue={todo.due_date || ''}
             onSave={(val) => handleSave('due_date', val)}
             inputType="input"

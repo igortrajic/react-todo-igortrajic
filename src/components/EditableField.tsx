@@ -20,7 +20,7 @@ export default function EditableField({
 
   const handleFinish = () => {
     setIsEditing(false);
-    if (value.trim() !== initialValue) {
+    if (value !== initialValue) {
       onSave(value);
     }
   };
