@@ -80,3 +80,15 @@ export const updateTodo = async (
 
   return responseData[0];
 };
+
+export async function deleteAllTodos(): Promise<void> {
+  const response = await fetch(API_URL, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error(`Failed to delete all todos: ${response.status}`);
+  }
+}

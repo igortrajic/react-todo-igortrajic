@@ -1,6 +1,12 @@
 import { create } from 'zustand';
 import type { Todo, BaseTodo } from './components/todoInterface';
-import { createTodo, getTodos, deleteTodo, updateTodo } from './todoApi';
+import {
+  createTodo,
+  getTodos,
+  deleteTodo,
+  updateTodo,
+  deleteAllTodos,
+} from './todoApi';
 
 interface TodoState {
   todos: Todo[];
@@ -20,6 +26,7 @@ interface TodoState {
   }) => Promise<void>;
   removeTodo: (id: number) => Promise<void>;
   editTodo: (id: number, updates: Partial<BaseTodo>) => Promise<void>;
+  removeAllTodos: () => Promise<void>;
 }
 
 export const useAppStore = create<TodoState>((set, get) => ({
@@ -77,6 +84,24 @@ export const useAppStore = create<TodoState>((set, get) => ({
       await get().fetchTodos();
     } catch {
       set({ errorMessage: 'Failed to modify task.' });
+    }
+  },
+
+  removeAllTodos: async () => {
+    const previousTodos = get().todos;
+
+    if (previousTodos.length === 0) return;
+
+    set({ errorMessage: null });
+
+    set({ todos: [] });
+    try {
+      await deleteAllTodos();
+    } catch {
+      set({
+        todos: previousTodos,
+        errorMessage: 'Failed to delete all tasks.',
+      });
     }
   },
 }));
