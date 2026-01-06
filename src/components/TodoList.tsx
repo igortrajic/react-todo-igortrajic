@@ -1,4 +1,4 @@
-import TodoItem from '../components/TodoItem';
+import TodoItem from './TodoItem';
 import { useAppStore } from '../useStore';
 
 export default function TodoList() {
