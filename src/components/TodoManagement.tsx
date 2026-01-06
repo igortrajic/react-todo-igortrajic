@@ -1,6 +1,6 @@
 import { useAppStore } from '../useStore';
 
-export default function TodoMenagement() {
+export default function TodoManagement() {
   const setSortType = useAppStore((state) => state.setSortType);
   const setFilterType = useAppStore((state) => state.setFilterType);
   return (

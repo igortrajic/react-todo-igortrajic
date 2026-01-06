@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import './App.css';
 import TodoList from './components/TodoList';
-import TodoMenagement from './components/TodoManagement';
+import TodoManagement from './components/TodoManagement';
 import TodoCreationForm from './components/TodoCreationForm';
 import { ErrorPopUp } from './components/ErrorMessage';
 import { useAppStore } from './useStore';
@@ -20,7 +20,7 @@ export default function App() {
             <ErrorPopUp message={errorMessage} onClose={clearError} />
           )}
           <TodoCreationForm />
-          <TodoMenagement />
+          <TodoManagement />
           <TodoList />
         </div>
       </Suspense>
