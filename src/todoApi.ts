@@ -88,7 +88,7 @@ export async function deleteAllTodos(): Promise<void> {
       'Content-Type': 'application/json',
     },
   });
-  if (response.ok) {
-    return;
+  if (!response.ok) {
+    throw new Error(`Failed to delete all todos: ${response.status}`);
   }
 }

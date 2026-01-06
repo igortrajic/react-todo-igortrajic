@@ -97,7 +97,6 @@ export const useAppStore = create<TodoState>((set, get) => ({
     set({ todos: [] });
     try {
       await deleteAllTodos();
-      await get().fetchTodos();
     } catch {
       set({
         todos: previousTodos,
