@@ -1,23 +1,14 @@
 import type { Todo } from './todoInterface';
 import EditableField from './EditableField';
+import { useAppStore } from '../useStore';
 
 interface TodoItemProps {
   todo: Todo;
-  deleteAction: (formData: FormData) => void;
-  editAction: (formData: FormData) => void;
 }
 
-export default function TodoItem({
-  todo,
-  deleteAction,
-  editAction,
-}: TodoItemProps) {
-  const handleSave = (field: string, newValue: string) => {
-    const formData = new FormData();
-    formData.append('id', todo.id.toString());
-    formData.append(field, newValue);
-    editAction(formData);
-  };
+export default function TodoItem({todo}: TodoItemProps) {
+  const editTodo = useAppStore((state) => state.editTodo);
+  const removeTodo = useAppStore((state) => state.removeTodo);
 
   return (
     <li className="todo-item">
@@ -25,14 +16,15 @@ export default function TodoItem({
         type="checkbox"
         className="checkbox"
         checked={todo.done}
-        onChange={(e) => handleSave('done', String(e.target.checked))}
+        onChange={(e) => editTodo(todo.id, { done: e.target.checked })}
       />
 
       <h3 className="title">
         <EditableField
           key={todo.id + '-title'}
           initialValue={todo.title}
-          onSave={(val) => handleSave('title', val)}
+          onSave={(val) => editTodo(todo.id, { title: val })}
+          required={true}
         />
       </h3>
 
@@ -40,7 +32,7 @@ export default function TodoItem({
         <EditableField
           key={todo.id + '-content'}
           initialValue={todo.content || ''}
-          onSave={(val) => handleSave('content', val)}
+          onSave={(val) => editTodo(todo.id, { content: val })}
           inputType="textarea"
           placeholder="Click to add description..."
         />
@@ -51,7 +43,7 @@ export default function TodoItem({
           <EditableField
             key={todo.id + '-due_date'}
             initialValue={todo.due_date || ''}
-            onSave={(val) => handleSave('due_date', val)}
+            onSave={(val) => editTodo(todo.id, { due_date: val })}
             inputType="input"
             htmlType="date"
             placeholder="Set a date"
@@ -59,12 +51,9 @@ export default function TodoItem({
         </time>
       </p>
 
-      <form action={deleteAction}>
-        <input type="hidden" name="id" value={todo.id} />
-        <button className="buttons red" type="submit">
+        <button className="buttons red" onClick={() => removeTodo(todo.id)}>
           Delete
         </button>
-      </form>
     </li>
   );
 }

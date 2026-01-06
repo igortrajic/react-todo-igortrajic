@@ -6,6 +6,7 @@ interface EditableFieldProps {
   inputType?: 'input' | 'textarea';
   htmlType?: 'text' | 'date';
   placeholder?: string;
+  required?: boolean;
 }
 
 export default function EditableField({
@@ -14,11 +15,18 @@ export default function EditableField({
   onSave,
   inputType = 'input',
   htmlType = 'text',
+  required = false,
 }: EditableFieldProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(initialValue);
 
   const handleFinish = () => {
+    if (required && value.trim() === '') {
+      alert('This field cannot be empty!');
+      setValue(initialValue); 
+      setIsEditing(false);
+      return;
+    }
     setIsEditing(false);
     if (value !== initialValue) {
       onSave(value);

@@ -42,3 +42,42 @@ export const createTodo = async (newTodoData: {
   }
   return responseData[0];
 };
+
+
+export const deleteTodo = async (id: number): Promise<void> => {
+  const response = await fetch(`${API_URL}?id=eq.${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to delete todo: ${response.status}`);
+  }
+};
+
+export const updateTodo = async (
+  id: number,
+  updates: Partial<BaseTodo>,
+): Promise<Todo> => {
+  const response = await fetch(`${API_URL}?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Prefer: 'return=representation',
+    },
+    body: JSON.stringify(updates),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to edit todo: ${response.status}`);
+  }
+  const responseData = await response.json();
+
+  if (!responseData || responseData.length === 0) {
+    throw new Error('API did not return the updated todo.');
+  }
+
+  return responseData[0];
+};
