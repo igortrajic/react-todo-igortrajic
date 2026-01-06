@@ -1,25 +1,18 @@
-interface TodoManagementProps {
-  onSortChange: (sortType: string) => void;
-  onFilterChange: (filterType: string) => void;
-}
+import { useAppStore } from '../useStore';
 
-export default function TodoMenagement({
-  onSortChange,
-  onFilterChange,
-}: TodoManagementProps) {
+export default function TodoManagement() {
+  const setSortType = useAppStore((state) => state.setSortType);
+  const setFilterType = useAppStore((state) => state.setFilterType);
   return (
     <div className="todo-container">
       <button className="buttons red">Delete all</button>
-      <select
-        className="buttons"
-        onChange={(e) => onSortChange(e.target.value)}
-      >
+      <select className="buttons" onChange={(e) => setSortType(e.target.value)}>
         <option value="name">By Name</option>
         <option value="date">By Date</option>
       </select>
       <select
         className="buttons"
-        onChange={(e) => onFilterChange(e.target.value)}
+        onChange={(e) => setFilterType(e.target.value)}
       >
         <option value="all">All</option>
         <option value="done">Done</option>

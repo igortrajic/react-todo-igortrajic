@@ -1,15 +1,17 @@
 import { useState } from 'react';
+import { useAppStore } from '../useStore';
 
-interface TodoCreationFormProps {
-  action: (formData: FormData) => void;
-}
-export default function TodoCreationForm({ action }: TodoCreationFormProps) {
+export default function TodoCreationForm() {
+  const addTodo = useAppStore((state) => state.addTodo);
   const [showDescription, setShowDescription] = useState(false);
   return (
     <form
       className="todo-container"
       action={async (formData) => {
-        action(formData);
+        const title = formData.get('title')?.toString() || '';
+        const due_date = formData.get('due_date')?.toString();
+        const content = formData.get('content')?.toString();
+        await addTodo({ title, due_date, content });
       }}
     >
       <input type="text" className="user-input" name="title" required />
