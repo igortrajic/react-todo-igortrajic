@@ -35,7 +35,7 @@ To learn more about Rsbuild, check out the following resources:
 - [Rsbuild documentation](https://rsbuild.rs) - explore Rsbuild features and APIs.
 - [Rsbuild GitHub repository](https://github.com/web-infra-dev/rsbuild) - your feedback and contributions are welcome!
 
-Features
+## Features
 Task Management: Create new tasks with a title, due date, and optional description.
 
 Inline Editing: Edit task titles, descriptions, and dates directly within the list using the EditableField component.
@@ -54,7 +54,7 @@ Error Handling: Global error popup system to alert users of API or validation fa
 
 Persistence: All data is synced with a remote REST API.
 
-Component Description
+## Component Description
 App: The root component that wraps the application in ErrorBoundary and Suspense. It orchestrates the main layout.
 
 TodoCreationForm: Handles input validation and submission of new tasks.
@@ -66,3 +66,8 @@ TodoList: Filters and sorts the raw todo list based on store state before render
 TodoItem: Represents a single task card with a checkbox and delete button.
 
 EditableField: A reusable UI component that switches between read-only text and an input/textarea for inline editing.
+
+## Diagram 
+
+<img width="1491" height="868" alt="image" src="https://github.com/user-attachments/assets/c30db2fe-cb85-4444-b39b-230144013905" />
+
