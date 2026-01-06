@@ -23,7 +23,7 @@ export default function EditableField({
   const handleFinish = () => {
     if (required && value.trim() === '') {
       alert('This field cannot be empty!');
-      setValue(initialValue); 
+      setValue(initialValue);
       setIsEditing(false);
       return;
     }

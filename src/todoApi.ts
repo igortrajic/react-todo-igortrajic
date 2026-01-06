@@ -43,7 +43,6 @@ export const createTodo = async (newTodoData: {
   return responseData[0];
 };
 
-
 export const deleteTodo = async (id: number): Promise<void> => {
   const response = await fetch(`${API_URL}?id=eq.${id}`, {
     method: 'DELETE',

@@ -1,7 +1,6 @@
-import { create } from "zustand";
-import type { Todo, BaseTodo } from "./components/todoInterface";
-import { createTodo,getTodos,deleteTodo, updateTodo } from "./todoApi";
-
+import { create } from 'zustand';
+import type { Todo, BaseTodo } from './components/todoInterface';
+import { createTodo, getTodos, deleteTodo, updateTodo } from './todoApi';
 
 interface TodoState {
   todos: Todo[];
@@ -14,15 +13,19 @@ interface TodoState {
   clearError: () => void;
 
   fetchTodos: () => Promise<void>;
-  addTodo: (todo: { title: string; content?: string; due_date?: string }) => Promise<void>;
+  addTodo: (todo: {
+    title: string;
+    content?: string;
+    due_date?: string;
+  }) => Promise<void>;
   removeTodo: (id: number) => Promise<void>;
   editTodo: (id: number, updates: Partial<BaseTodo>) => Promise<void>;
 }
 
 export const useAppStore = create<TodoState>((set, get) => ({
   todos: [],
-  sortType: "name",
-  filterType: "all",
+  sortType: 'name',
+  filterType: 'all',
   errorMessage: null,
 
   setSortType: (type) => set({ sortType: type }),
@@ -33,7 +36,7 @@ export const useAppStore = create<TodoState>((set, get) => ({
       const data = await getTodos();
       set({ todos: data });
     } catch {
-      set({ errorMessage: "Failed to load todos" });
+      set({ errorMessage: 'Failed to load todos' });
     }
   },
 
@@ -44,12 +47,12 @@ export const useAppStore = create<TodoState>((set, get) => ({
     try {
       await createTodo({
         title: todo.title,
-        content: todo.content || "",
-        due_date: todo.due_date || "",
+        content: todo.content || '',
+        due_date: todo.due_date || '',
       });
       await get().fetchTodos();
     } catch {
-      set({ errorMessage: "Failed to create task. Please try again." });
+      set({ errorMessage: 'Failed to create task. Please try again.' });
     }
   },
 
@@ -61,7 +64,7 @@ export const useAppStore = create<TodoState>((set, get) => ({
       await deleteTodo(id);
       await get().fetchTodos();
     } catch {
-      set({ errorMessage: "Failed to delete task." });
+      set({ errorMessage: 'Failed to delete task.' });
     }
   },
 
@@ -73,7 +76,7 @@ export const useAppStore = create<TodoState>((set, get) => ({
       await updateTodo(id, updates);
       await get().fetchTodos();
     } catch {
-      set({ errorMessage: "Failed to modify task." });
+      set({ errorMessage: 'Failed to modify task.' });
     }
   },
 }));

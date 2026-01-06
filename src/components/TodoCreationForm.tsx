@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useAppStore } from '../useStore';
 
-
 export default function TodoCreationForm() {
   const addTodo = useAppStore((state) => state.addTodo);
   const [showDescription, setShowDescription] = useState(false);

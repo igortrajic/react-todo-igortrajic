@@ -6,7 +6,7 @@ interface TodoItemProps {
   todo: Todo;
 }
 
-export default function TodoItem({todo}: TodoItemProps) {
+export default function TodoItem({ todo }: TodoItemProps) {
   const editTodo = useAppStore((state) => state.editTodo);
   const removeTodo = useAppStore((state) => state.removeTodo);
 
@@ -51,9 +51,9 @@ export default function TodoItem({todo}: TodoItemProps) {
         </time>
       </p>
 
-        <button className="buttons red" onClick={() => removeTodo(todo.id)}>
-          Delete
-        </button>
+      <button className="buttons red" onClick={() => removeTodo(todo.id)}>
+        Delete
+      </button>
     </li>
   );
 }
